@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clouddo-zuul
+  namespace: test
+  labels:
+    app: clouddo-zuul
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clouddo-zuul
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: clouddo-zuul
+        tier: backend
+    spec:
+      containers:
+      - name: clouddo-zuul
+        image: ygqbasic/clouddo-zuul
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8002
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8002
+          initialDelaySeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8002
+          initialDelaySeconds: 15
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clouddo-zuul
+  namespace: test
+  labels:
+    app: clouddo-zuul
+    tier: backend
+spec:
+  selector:
+    app: clouddo-zuul
+    tier: backend
+  ports:
+  - port: 8002
+    name: k8s-backend
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: clouddo-zuul
+  namespace: test
+spec:
+  rules:
+  - host: clouddo-zuul.test.com
+    http:
+      paths:
+      - backend:
+          serviceName: clouddo-zuul
+          servicePort: k8s-backend
+

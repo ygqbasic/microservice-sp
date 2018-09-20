@@ -1,12 +1,12 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8001/eureka/
+      defaultZone: http://clouddo-server:8761/eureka/
 server:
   port: 8002
 spring:
   application:
-    name: zuul
+    name: clouddo-zuul
   servlet:
     multipart:
       max-file-size: 100Mb
