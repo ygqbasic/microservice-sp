@@ -4,8 +4,12 @@ server:
 eureka:
   instance:
     hostname: localhost
+    appname: ${spring.application.name} #服务名称，默认为 unknow 这里直接取 spring.application.name 了
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+spring:
+  application:
+    name: clouddo-server
