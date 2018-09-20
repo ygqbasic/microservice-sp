@@ -19,7 +19,7 @@ spec:
         tier: backend
     spec:
       containers:
-      - name: k8s-example
+      - name: clouddo-server
         image: ygqbasic/clouddo-server
         resources:
           requests:
