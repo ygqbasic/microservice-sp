@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 public class Healthz {
-    @GetMapping(path = "/healthz",produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(path = "/healthz")
     public String healthz(){
         return "ok";
     }
