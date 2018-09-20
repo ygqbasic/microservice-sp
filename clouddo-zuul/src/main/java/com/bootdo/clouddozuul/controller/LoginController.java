@@ -24,3 +24,13 @@ public class LoginController {
         return menuService.userMenus();
     }
 }
+
+
+@RestController
+@RequestMapping(path = "/")
+public class Healthz {
+    @GetMapping(path = "/healthz",produces = MediaType.TEXT_PLAIN_VALUE)
+    public String healthz(){
+        return "ok";
+    }
+}
