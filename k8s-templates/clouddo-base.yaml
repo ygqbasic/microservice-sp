@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clouddo-base
+  namespace: test
+  labels:
+    app: clouddo-base
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clouddo-base
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: clouddo-base
+        tier: backend
+    spec:
+      containers:
+      - name: clouddo-base
+        image: ygqbasic/clouddo-base
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8002
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 8002
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 8002
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clouddo-base
+  namespace: test
+  labels:
+    app: clouddo-base
+    tier: backend
+spec:
+  selector:
+    app: clouddo-base
+    tier: backend
+  ports:
+  - port: 8002
+    name: k8s-backend
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: clouddo-base
+  namespace: test
+spec:
+  rules:
+  - host: clouddo-base.test.com
+    http:
+      paths:
+      - backend:
+          serviceName: clouddo-base
+          servicePort: k8s-backend
+
