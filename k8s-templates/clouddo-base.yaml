@@ -26,12 +26,12 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 8002
+        - containerPort: 8003
         livenessProbe:
           failureThreshold: 3
           httpGet:
-            path: /healthz
-            port: 8002
+            path: /
+            port: 8003
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10
@@ -40,8 +40,8 @@ spec:
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /healthz
-            port: 8002
+            path: /
+            port: 8003
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10
@@ -62,7 +62,7 @@ spec:
     app: clouddo-base
     tier: backend
   ports:
-  - port: 8002
+  - port: 8003
     name: k8s-backend
 
 ---
