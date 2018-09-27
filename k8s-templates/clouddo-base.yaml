@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: clouddo-base
-  namespace: test
+  namespace: development
   labels:
     app: clouddo-base
     tier: backend
@@ -53,7 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: clouddo-base
-  namespace: test
+  namespace: development
   labels:
     app: clouddo-base
     tier: backend
@@ -70,10 +70,10 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: clouddo-base
-  namespace: test
+  namespace: development
 spec:
   rules:
-  - host: clouddo-base.test.com
+  - host: clouddo-base-adc.test.com
     http:
       paths:
       - backend:
