@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: clouddo-zuul
-  namespace: test
+  namespace: development
   labels:
     app: clouddo-zuul
     tier: backend
@@ -53,7 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: clouddo-zuul
-  namespace: test
+  namespace: development
   labels:
     app: clouddo-zuul
     tier: backend
@@ -70,10 +70,10 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: clouddo-zuul
-  namespace: test
+  namespace: development
 spec:
   rules:
-  - host: clouddo-zuul.test.com
+  - host: mygatewaytest.chinaeast.cloudapp.chinacloudapi.cn
     http:
       paths:
       - backend:
